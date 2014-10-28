@@ -87,7 +87,10 @@ public class MainActivity extends Activity {
 
 		// Refresh the list when visible
 		// TODO: Search all
-		
+		movies.clear();
+		Thread thread = new SearchThread("");
+		thread.start();
+	
 	}
 
 	/** 
@@ -126,6 +129,18 @@ public class MainActivity extends Activity {
 
 	class SearchThread extends Thread {
 		// TODO: Implement search thread
+		private String search;
+		
+		public SearchThread(String s){
+			search = s;
+		}
+		@Override
+		public void run(){
+			movies.clear();
+			movies.addAll(movieManager.searchMovies(search, null));
+			
+			runOnUiThread(doUpdateGUIList);
+		}
 		
 	}
 
